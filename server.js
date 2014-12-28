@@ -12,7 +12,6 @@ var app = express();
 var http = require('http');
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
-var game_init = require('./public/js/game_init');
 io.set('log level', 1) // reduce the debug messages
 
 // Statically server pages from the public directory
