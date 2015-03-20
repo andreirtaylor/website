@@ -1,0 +1,286 @@
+doctype html(lang='en')
+head
+  meta(charset='utf-8')
+  meta(name='viewport', content='width=device-width, initial-scale=1.0')
+  meta(name='description', content='')
+  meta(name='author', content='')
+  title Andrei Taylor 
+  // Bootstrap Core CSS
+  link(href='css/bootstrap.min.css', rel='stylesheet', type='text/css')
+  // Fonts
+  link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+  link(href='css/animate.css', rel='stylesheet')
+  // Squad theme CSS
+  link(href='css/style.css', rel='stylesheet')
+  link(href='color/default.css', rel='stylesheet')
+  body#page-top(data-spy='scroll', data-target='.navbar-custom')
+    // Preloader
+    #preloader
+      #load
+    nav.navbar.navbar-custom.navbar-fixed-top(role='navigation')
+      .container
+        .navbar-header.page-scroll
+          button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-main-collapse')
+            i.fa.fa-bars
+          a.navbar-brand(href='index.html')
+            h1 ANDREI TAYLOR
+        // Collect the nav links, forms, and other content for toggling
+        .collapse.navbar-collapse.navbar-right.navbar-main-collapse
+          ul.nav.navbar-nav
+            li.active
+              a(href='#intro') Home
+            li
+              a(href='#about') About
+            li
+              a(href='#projects') Projects
+            li
+              a(href='#experience') Experience
+            li
+              a(href='#contact') Contact
+            //li.dropdown
+            //  a.dropdown-toggle(href='#', data-toggle='dropdown')
+            //    | Projets 
+            //    b.caret
+            //  |           
+            //  ul.dropdown-menu
+            //    li
+            //      a(href='#') Example menu
+            //    |             
+            //    li
+            //      a(href='#') Example menu
+            //    |             
+            //    li
+            //      a(href='#') Example menu
+    // intro section
+    section#intro.intro(style="background-size:cover")
+      .slogan
+        h2
+          | My name is Andrei Taylor
+        h4 I am a Software Engineer in Victoria, BC 
+      .page-scroll
+        a.btn.btn-circle(href='#about')
+          i.fa.fa-angle-double-down.animated
+    // /Section: intro
+    // Section: about
+    section#about.home-section.text-center
+      .heading-about
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.bounceInDown(data-wow-delay='0.4s')
+                .section-heading
+                  h2 About Me
+                  i.fa.fa-2x.fa-angle-down
+      .container
+        h4.
+          I am a 3rd year Software Engineering student at the University of Victoria. 
+          I am a memeber of the Uvic Aero Team and I spend much of my spare time learning about technology and working on open source projects. 
+          I love reading, hiking, biking and programming.
+        p
+        h3.
+          Languages: Python, Javascript, C, C++, Java, HTML, CSS
+            
+    //=============Projects================
+    // couple of variables to help make the logos the same size
+    - var projWidth = 223
+    - var projHeight = 223
+    - var projDimensions = 'width:' + projWidth + 'px; height:' + projHeight + 'px'
+    section#projects.home-section.text-center
+      .heading-about
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.bounceInDown(data-wow-delay='0.4s')
+                .section-heading
+                  h2 Extra Cirricular Projects 
+                  i.fa.fa-2x.fa-angle-down
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .row
+          .col-xs-6.col-sm-3.col-md-3
+            - var AeroURl = "http://www.aero-ug.uvic.ca/index.php"
+            .wow.bounceInUp(data-wow-delay='0.2s')
+              .team.boxed-grey
+                .inner
+                  h5 Uvic Aero
+                  |         
+                  p.subtitle 
+                  |  Aero is a student lead team that participates in unmanned aircraft competitions.
+                  |  I designed and implemented a tracking algorithm that points an antenna at the plane to allow live image capture 
+                  .avatar
+                    img.img-responsive.img-circle(src='img/team/1.jpg', alt='', style=projDimensions)
+                  p.subtitle 
+                  | languages: C and C++ 
+          .col-xs-6.col-sm-3.col-md-3
+            .wow.bounceInUp(data-wow-delay='0.5s')
+              .team.boxed-grey
+                .inner
+                  h5 Board Game Tracking
+                  |                         
+                  p.subtitle 
+                  |  A Web application that allows real time tracking of money in board games like Monopoly or Powergrid. 
+                  |  The server is Nodejs with Express Middleware, the frontend logic is controlled with Angular JS
+                  .avatar
+                    img.img-responsive.img-circle(src='img/team/BGT.png', alt='', style=projDimensions)
+                  p.subtitle
+                  |  language: Javascript
+                  p.subttle(style="margin:0px")
+                    a(href="https://github.com/andreirtaylor/MoneyTracker") github
+          .col-xs-6.col-sm-3.col-md-3
+            - var battleSnakeURL = "http://www.battlesnake.io"
+            .wow.bounceInUp(data-wow-delay='0.8s')
+              .team.boxed-grey
+                .inner
+                  h5 Battle Snake
+                  p.subtitle 
+                  |  Wrote an algorithm to control a snake in a battle arena. 
+                  |  The snake was controlled through a restful api,
+                  |  we wrote our server using bottle and guinicorn
+                  .avatar
+                    a(href=battleSnakeURL)
+                      img.img-responsive.img-circle(src='img/team/battlesnake.jpg', alt='', style=projDimensions)
+                  p.subtitle
+                  |  language: Python
+                  p.subttle(style="margin:0px")
+                    a(href=battleSnakeURL)= "website,   "
+                      span
+                        a(href="https://github.com/cpjk/bs") github
+          .col-xs-6.col-sm-3.col-md-3
+            - var MPGUrl = "http://engenuics.com/mpg/mpg-students/mpg-level-2-atmel/"
+            .wow.bounceInUp(data-wow-delay='1s')
+              .team.boxed-grey
+                .inner
+                  h5 MPG Microprocessor Training
+                  p.subtitle
+                  | MPG is a hands-on training course for embedded systems.
+                  | The project was to program the board to play pong wirelessly against others. 
+                  | I learned about programming embedded systems and building simple circuits
+                  .avatar
+                    a(href=MPGUrl)
+                     img.img-responsive.img-circle(src='img/team/MPG.jpg', alt='', style=projDimensions)
+                  p.subtitle
+                  |  language: C
+                  p.subttle(style="margin:0px")
+                    a(href=MPGUrl)= "website"
+    // /Section: about
+    // Section: services
+    section#experience.home-section.text-center.bg-gray
+      .heading-about
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.bounceInDown(data-wow-delay='0.2s')
+                .section-heading
+                  h2 Work Experience 
+                  i.fa.fa-2x.fa-angle-down
+      // couple of variables to help make the logos the same size
+      - var logoWidth = 100
+      - var logoHeight = 50
+      - var logoDimensions = 'width:' + logoWidth + 'px; height:' + logoHeight + 'px'
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .row
+          .col-sm-3.col-md-3
+            .wow.fadeInLeft(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  img(src='img/icons/KCI.gif', style= logoDimensions,  alt='')
+                .service-desc
+                  h5 KCI World - Account Manager
+                  p.
+                    Worked with companies to develop a marketing strategy that best suits their individual needs. 
+                  p
+                    b.
+                      Was responsible for multiple media channels which covered Printed and Electronic Media and Trade Shows.
+                  p.
+                    Travelled to attend relevant events, industry shows, clients, prospects and training.
+                  p
+                    b.
+                      Responsible for business development as well as managing and retaining existing accounts.
+                  p.
+                    Meet face to face with executives and business owners to plan and build multi-year advertising campaigns.
+                  p
+                    b.
+                      Sold booth space in trade shows as well as attending and providing support to exhibitors and delegates
+          .col-sm-3.col-md-3
+            .wow.fadeInUp(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  img(src='img/icons/FutureShop.png', style=logoDimensions , alt='')
+                .service-desc
+                  h5 Future Shop - Product Expert
+                  p.
+                    Consistently exceeded sales targets by over 20%
+                  p
+                    b.
+                      Increased revenue by completing a detailed competitor price comparison each week 
+                  p.
+                    Developed communication skills through listening to customers and providing them with service tailored to their specific needs and expectations
+                  p
+                    b.
+                      Trained seasonal staff and worked alongside others to rehearse sales techniques and give constructive criticism
+
+          .col-sm-3.col-md-3
+            .wow.fadeInUp(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  img(src='img/icons/service-icon-3.png', alt='')
+                .service-desc
+                  h5 Photography
+                  p
+                    | Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+          .col-sm-3.col-md-3
+            .wow.fadeInRight(data-wow-delay='0.2s')
+              .service-box
+                .service-icon
+                  img(src='img/icons/service-icon-4.png', alt='')
+                .service-desc
+                  h5 Cloud System
+                  p
+                    | Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
+    // /Section: services
+    // Section: contact
+    section#contact.home-section.text-center
+      .heading-contact
+        .container
+          .row
+            .col-lg-8.col-lg-offset-2
+              .wow.bounceInDown(data-wow-delay='0.4s')
+                .section-heading
+                  h2 Get in touch
+                  i.fa.fa-2x.fa-angle-down
+      .container
+        .row
+          .col-lg-2.col-lg-offset-5
+            hr.marginbot-50
+        .row
+          .col-lg-4.col-lg-offset-4
+            a(href="https://github.com/andreirtaylor")
+              i.fa.fa-github.fa-5x &nbsp
+            a(href="https://ca.linkedin.com/pub/andrei-ryan-taylor/2a/86a/aa9/en")
+              i.fa.fa-linkedin.fa-5x &nbsp
+            a(href='mailto:andreirtaylor@gmail.com')
+              i.fa.fa-envelope-o.fa-5x 
+          .col-lg-4
+    // /Section: contact
+    footer
+      .container
+        .row
+          .col-md-12.col-lg-12
+            .wow.shake(data-wow-delay='0.4s')
+              .page-scroll.marginbot-30
+                a#totop.btn.btn-circle(href='#intro')
+                  i.fa.fa-angle-double-up.animated
+            p &copy; Made with ❤  by Andrei Taylor.
+    // Core JavaScript Files
+    script(src='js/jquery.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='js/jquery.easing.min.js')
+    script(src='js/jquery.scrollTo.js')
+    script(src='js/wow.min.js')
+    // Custom Theme JavaScript
+    script(src='js/custom.js')

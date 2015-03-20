@@ -11,8 +11,6 @@ var express = require('express');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
-var io = require('socket.io').listen(server);
-io.set('log level', 1) // reduce the debug messages
 
 // Statically server pages from the public directory
 app.configure( function() {
