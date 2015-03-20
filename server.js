@@ -4,7 +4,7 @@
  * socket.io room)
  */
 
-var PORT = 3000;
+var PORT = 2000;
 
 // Preliminaries
 var express = require('express');
