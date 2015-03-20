@@ -6,8 +6,8 @@
 var PORT = process.env.PORT ? process.env.PORT : 3000;
 
 // Preliminaries
-var app = (require('express'))();
-//var app = express();
+var app = require('express')();
+var app = express();
 var http = require('http');
 var server = http.createServer(app);
 
