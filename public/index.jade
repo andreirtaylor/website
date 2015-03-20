@@ -85,7 +85,7 @@ head
     // couple of variables to help make the logos the same size
     - var projWidth = 223
     - var projHeight = 223
-    - var projDimensions = 'width:' + projWidth + 'px; height:' + projHeight + 'px'
+    - var projDimensions = 'width:' + projWidth + 'px; height:' + projHeight + 'px' + ';margin: 0 auto' 
     section#projects.home-section.text-center
       .heading-about
         .container
@@ -100,7 +100,7 @@ head
           .col-lg-2.col-lg-offset-5
             hr.marginbot-50
         .row
-          .col-xs-6.col-sm-3.col-md-3
+          .col-xs-12.col-sm-3.col-md-3
             - var AeroURl = "http://www.aero-ug.uvic.ca/index.php"
             .wow.bounceInUp(data-wow-delay='0.2s')
               .team.boxed-grey
@@ -111,10 +111,14 @@ head
                   |  Aero is a student lead team that participates in unmanned aircraft competitions.
                   |  I designed and implemented a tracking algorithm that points an antenna at the plane to allow live image capture 
                   .avatar
-                    img.img-responsive.img-circle(src='img/team/aero.jpeg', alt='', style=projDimensions)
+                    a(href=AeroURl)
+                      img.img-responsive.img-circle(src='img/team/aero.jpeg', alt='', style=projDimensions)
                   p.subtitle 
                   | languages: C and C++ 
-          .col-xs-6.col-sm-3.col-md-3
+                  p.subttle(style="margin:0px")
+                    a(href=AeroURl)= "website"
+          .col-xs-12.col-sm-3.col-md-3
+            - var boardGameTrackingURL = "http://www.boardgametracking.com"
             .wow.bounceInUp(data-wow-delay='0.5s')
               .team.boxed-grey
                 .inner
@@ -124,12 +128,15 @@ head
                   |  A Web application that allows real time tracking of money in board games like Monopoly or Powergrid. 
                   |  The server is Nodejs with Express Middleware, the frontend logic is controlled with Angular JS
                   .avatar
-                    img.img-responsive.img-circle(src='img/team/BGT.png', alt='', style=projDimensions)
+                    a(href=boardGameTrackingURL)
+                      img.img-responsive.img-circle(src='img/team/BGT.png', alt='', style=projDimensions)
                   p.subtitle
                   |  language: Javascript
                   p.subttle(style="margin:0px")
-                    a(href="https://github.com/andreirtaylor/MoneyTracker") github
-          .col-xs-6.col-sm-3.col-md-3
+                    a(href=boardGameTrackingURL)= "website,   "
+                      span
+                        a(href="https://github.com/andreirtaylor/MoneyTracker") github
+          .col-xs-12.col-sm-3.col-md-3
             - var battleSnakeURL = "http://www.battlesnake.io"
             .wow.bounceInUp(data-wow-delay='0.8s')
               .team.boxed-grey
@@ -148,7 +155,7 @@ head
                     a(href=battleSnakeURL)= "website,   "
                       span
                         a(href="https://github.com/cpjk/bs") github
-          .col-xs-6.col-sm-3.col-md-3
+          .col-xs-12.col-sm-3.col-md-3
             - var MPGUrl = "http://engenuics.com/mpg/mpg-students/mpg-level-2-atmel/"
             .wow.bounceInUp(data-wow-delay='1s')
               .team.boxed-grey
