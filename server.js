@@ -7,14 +7,14 @@ var PORT = process.env.PORT ? process.env.PORT : 3000;
 
 // Preliminaries
 var express = require('express');
+var compression = require('compression');
 var app = express();
 var http = require('http');
 var server = http.createServer(app);
 
-// Statically server pages from the public directory
-app.configure( function() {
-    app.use(express.static(__dirname + '/public'));
-});
+// Statically serve pages from the public directory
+app.use(compression());
+app.use(express.static(__dirname + '/public'));
 
 // Start the server
 server.listen(PORT);
