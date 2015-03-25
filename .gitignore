@@ -3,5 +3,8 @@
 
 #no vim swp files
 *.swp
+#no tilda files
+*~
+
 #no files within node_modules
 node_modules/
