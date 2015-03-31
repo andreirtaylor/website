@@ -6,15 +6,25 @@
 var PORT = process.env.PORT ? process.env.PORT : 8008;
 
 // Preliminaries
-var express = require('express');
-var compression = require('compression');
-var app = express();
-var http = require('http');
-var server = http.createServer(app);
+var express = require('express'),
+    compression = require('compression'),
+    app = express(),
+    http = require('http'),
+    server = http.createServer(app),
+    path = require('path');
+
+//render the jade templates
+app.set('views', path.join(__dirname + '/public'));
+app.set('view engine', 'jade');
+
 
 // Statically serve pages from the public directory
 app.use(compression());
 app.use(express.static(__dirname + '/public'));
+
+app.get('/', function(req, res, next){
+    res.render('index');
+});
 
 // Start the server
 server.listen(PORT);
