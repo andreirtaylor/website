@@ -5,7 +5,7 @@ A simple node server and and a jade template customized from [DesignCrazed](http
 
 ## Installation
 
-Install [node](www.nodejs.org)
+Install [node](nodejs.org)
 
 Run ```npm install && npm start``` then go to ```localhost:8080``` in your browser
 
