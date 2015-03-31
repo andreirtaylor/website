@@ -11,7 +11,7 @@ var keepAlive = function(mins){
             time = dateObj.toTimeString().replace(/ .+/, '');
 
         http.get("http://www." + SITE);
-        console.log( "geting site " + site + "   " + time + "   " + date );
+        console.log( "geting site " + SITE + "   " + time + "   " + date );
     }, 60000 * mins);
 }
 
