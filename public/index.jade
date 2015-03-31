@@ -71,7 +71,6 @@ head
               .wow.bounceInDown(data-wow-delay='0.4s')
                 .section-heading
                   h2 About Me
-                  i.fa.fa-2x.fa-angle-down
       .container
         .wow.bounceInUp(data-wow-delay='0.3s')
           h4.
@@ -95,13 +94,12 @@ head
               .wow.bounceInDown(data-wow-delay='0.1s')
                 .section-heading
                   h2 Extra Cirricular Projects 
-                  i.fa.fa-2x.fa-angle-down
       .container
         .row
           .col-lg-2.col-lg-offset-5
             hr.marginbot-50
         .row
-          .col-xs-12.col-sm-3.col-md-3
+          .col-xs-12.col-sm-6.col-lg-3
             - var AeroURl = "http://www.aero-ug.uvic.ca/index.php"
             .wow.bounceInUp(data-wow-delay='0.2s')
               .team.boxed-grey
@@ -118,7 +116,7 @@ head
                   | languages: C and C++ 
                   p.subttle(style="margin:0px")
                     a(href=AeroURl)= "website"
-          .col-xs-12.col-sm-3.col-md-3
+          .col-xs-12.col-sm-6.col-lg-3
             - var boardGameTrackingURL = "http://www.boardgametracking.com"
             .wow.bounceInUp(data-wow-delay='0.25s')
               .team.boxed-grey
@@ -137,7 +135,7 @@ head
                     a(href=boardGameTrackingURL)= "website,   "
                       span
                         a(href="https://github.com/andreirtaylor/MoneyTracker") github
-          .col-xs-12.col-sm-3.col-md-3
+          .col-xs-12.col-sm-6.col-lg-3
             - var battleSnakeURL = "http://www.battlesnake.io"
             .wow.bounceInUp(data-wow-delay='0.3s')
               .team.boxed-grey
@@ -156,7 +154,7 @@ head
                     a(href=battleSnakeURL)= "website,   "
                       span
                         a(href="https://github.com/cpjk/bs") github
-          .col-xs-12.col-sm-3.col-md-3
+          .col-xs-12.col-sm-6.col-lg-3
             - var MPGUrl = "http://engenuics.com/mpg/mpg-students/mpg-level-2-atmel/"
             .wow.bounceInUp(data-wow-delay='0.35s')
               .team.boxed-grey
@@ -175,7 +173,7 @@ head
                     a(href=MPGUrl)= "website"
     // /Section: about
     // Section: services
-    section#experience.home-section.text-center.bg-gray
+    section#experience.home-section.text-center
       .heading-about
         .container
           .row
@@ -183,7 +181,6 @@ head
               .wow.bounceInDown(data-wow-delay='0.2s')
                 .section-heading
                   h2 Work Experience 
-                  i.fa.fa-2x.fa-angle-down
       // couple of variables to help make the logos the same size
       - var logoWidth = 100
       - var logoHeight = 50
@@ -242,31 +239,33 @@ head
                     b.
                       Trained seasonal staff and worked alongside others to rehearse sales techniques and give constructive criticism
 
-    // /Section: services
     // Section: contact
     section#contact.home-section.text-center
       .heading-contact
         .container
           .row
             .col-lg-8.col-lg-offset-2
-              .wow.bounceInDown(data-wow-delay='0.4s')
+              .wow.bounceInDown(data-wow-delay='0.2s')
                 .section-heading
                   h2 Get in touch
-                  i.fa.fa-2x.fa-angle-down
       .container
         .row
-          .col-lg-2.col-lg-offset-5
-            hr.marginbot-50
-        .row
-          .wow.bounceInDown(data-wow-delay='0.3s')
-            .col-lg-4.col-lg-offset-4
+          .col-lg-2.col-lg-offset-3
+            .wow.bounceInDown(data-wow-delay='0.3s')
               a(href="https://github.com/andreirtaylor")
-                i.fa.fa-github.fa-5x &nbsp
+                i.fa.fa-github.fa-5x.text-center
+                p Github
+          .col-lg-2
+            .wow.bounceInDown(data-wow-delay='0.3s')
               a(href="https://ca.linkedin.com/pub/andrei-ryan-taylor/2a/86a/aa9/en")
-                i.fa.fa-linkedin.fa-5x &nbsp
+                i.fa.fa-linkedin.fa-5x
+                p Linked In
+          .col-lg-2
+            .wow.bounceInDown(data-wow-delay='0.3s')
               a(href='mailto:andreirtaylor@gmail.com')
                 i.fa.fa-envelope-o.fa-5x 
-           .col-lg-4
+                p Email
+          .col-lg-3
     // /Section: contact
     footer
       .container

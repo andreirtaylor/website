@@ -3,7 +3,7 @@
  * to mirror all data sent by one client to all others (in the same
  * socket.io room)
  */
-var PORT = process.env.PORT ? process.env.PORT : 3000;
+var PORT = process.env.PORT ? process.env.PORT : 8008;
 
 // Preliminaries
 var express = require('express');
