@@ -11,7 +11,8 @@ var express = require('express'),
     app = express(),
     http = require('http'),
     server = http.createServer(app),
-    path = require('path');
+    path = require('path'),
+    keepAlive = require('./keepAlive.js');
 
 //render the jade templates
 app.set('views', path.join(__dirname + '/public'));
