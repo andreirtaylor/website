@@ -1,9 +1,12 @@
 var keepAlive = function(mins){
     var http = require("http"),
-        SITE = process.env.SITE.trim(),
+    	SITE = process.env.SITE
         mins = mins ? mins : 30;
 	
     if(!SITE) return;    
+   
+    // get rid of whitespace
+    SITE = SITE.trim() 
 
     setInterval(function() {
         var dateObj = new Date(),
@@ -11,7 +14,6 @@ var keepAlive = function(mins){
             time = dateObj.toTimeString().replace(/ .+/, '');
 
         http.get("http://www." + SITE);
-        console.log( "geting site " + SITE + "   " + time + "   " + date );
     }, 60000 * mins);
 }
 
