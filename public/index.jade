@@ -194,54 +194,20 @@ head
           .col-lg-2.col-lg-offset-5
             hr.marginbot-50
         .row
-          //.col-sm-4.col-md-4
-          //  .wow.fadeInRight(data-wow-delay='0.2s')
-          //    .service-box
-          //      .service-icon
-          //        img(src='img/icons/service-icon-4.png', alt='')
-          //      .service-desc
-          //        h5 Latitude Geographics
-          //        p
-          //          | Vestibulum tincidunt enim in pharetra malesuada. Duis semper magna metus electram accommodare.
-          .col-sm-6.col-md-6
-            .wow.fadeInLeft(data-wow-delay='0.2s')
-              .service-box
-                .service-icon
-                  img(src='img/icons/KCI.gif', style= logoDimensions,  alt='')
-                .service-desc
-                  h5 KCI World - Account Manager
-                  p.
-                    Worked with companies to develop a marketing strategy that best suits their individual needs. 
-                  p
-                    b.
-                      Was responsible for multiple media channels which covered Printed and Electronic Media and Trade Shows.
-                  p.
-                    Travelled to attend relevant events, industry shows, clients, prospects and training.
-                  p
-                    b.
-                      Responsible for business development as well as managing and retaining existing accounts.
-                  p.
-                    Meet face to face with executives and business owners to plan and build multi-year advertising campaigns.
-                  p
-                    b.
-                      Sold booth space in trade shows as well as attending and providing support to exhibitors and delegates
-          .col-sm-6.col-md-6
-            .wow.fadeInUp(data-wow-delay='0.2s')
-              .service-box
-                .service-icon
-                  img(src='img/icons/FutureShop.png', style=logoDimensions , alt='')
-                .service-desc
-                  h5 Future Shop - Product Expert
-                  p.
-                    Consistently exceeded sales targets by over 20%
-                  p
-                    b.
-                      Increased revenue by completing a detailed competitor price comparison each week 
-                  p.
-                    Developed communication skills through listening to customers and providing them with service tailored to their specific needs and expectations
-                  p
-                    b.
-                      Trained seasonal staff and worked alongside others to rehearse sales techniques and give constructive criticism
+          for job in jobs
+            .col-sm-4.col-md-4.col-lg-4
+              .wow.fadeInLeft(data-wow-delay='0.2s')
+                .service-box
+                  .service-icon
+                    img(src='img/icons/' + job.icon, style= logoDimensions,  alt='')
+                  .service-desc
+                    h5= job.title
+                    each line, val in job.description
+                      if val % 2 == 0
+                        p= line 
+                      else
+                        p
+                          b= line
 
     // Section: contact
     section#contact.home-section.text-center
