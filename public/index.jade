@@ -73,10 +73,10 @@ head
                   h2 About Me
         .container
           .row.col-lg-4.col-lg-offset-2.col-md-4.col-md-offset-1.col-sm-6.col-sm-offset-3.col-xs-8.col-xs-offset-2
-            .wow.bounceInUp(data-wow-delay='0.2s')
+            .wow.slideInLeft(data-wow-delay='0.2s')
               img.img-responsive.img-circle(src='img/andreiprofile.png', alt='', style=projDimensions)
           .row4.col-lg-4.col-md-6.col-sm-10.col-sm-offset-1.col-xs-10.col-xs-offset-1
-            .wow.bounceInUp(data-wow-delay='0.3s')
+            .wow.slideInRight(data-wow-delay='0.3s')
               h4.
                 I am a 3rd year Software Engineering student at the University of Victoria. 
                 I am a memeber of the Uvic Aero Team and I spend much of my spare time learning about technology and working on open source projects. 
@@ -84,6 +84,10 @@ head
               p
                 h3.
                   Languages: Python, Javascript, C, C++, Java, HTML, CSS
+        br
+        a.btn.btn-success.wow.slideInRight(type="button" href='/resume.pdf' data-wow-delay='0.8s')
+          h1(style="margin:0")= "Resume "
+            i.fa.fa-file-text-o.animated
             
     //=============Projects================
     // couple of variables to help make the logos the same size
