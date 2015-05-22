@@ -25,7 +25,7 @@ var data = {
         "title": "Latitude Geographics - QA Analyist", 
         "description":[
             "Designed and Implemented a selennium based application that automated tedious tasks in testing",
-            "Found and reported over 50 bugs and assisted in the testing of fix versions",
+            "Wrote a script that archived sites hosted on internal servers resulting in a 80% decrease in storage",
             "Tested and released an update of the Geocortex HMTL5 Viewer",
             "Gained experience using restful API's"
         ]
@@ -36,7 +36,6 @@ var data = {
         description:[
             "Worked with companies to develop a marketing strategy that best suits their individual needs",
             "Was responsible for multiple media channels which covered Printed and Electronic Media and Trade Shows",
-            "Travelled to attend relevant events, industry shows, clients, prospects and training",
             "Responsible for business development as well as managing and retaining existing accounts",
             "Meet face to face with executives and business owners to plan and build multi-year advertising campaigns",
             "Sold booth space in trade shows as well as attending and providing support to exhibitors and delegates"
