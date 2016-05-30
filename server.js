@@ -21,6 +21,15 @@ app.set('view engine', 'jade');
 var data = {
     jobs:[
     {
+        "icon": "IsolationNetwork.png",
+        "title": "Software Developer - Software Developer",
+        "description":[
+          "Developed a replacement user interface for Universal Media Group's content distribution system",
+          "Created a Restful API for the existing SQL database using Entity Framework",
+          "Responsible for upgrading angular controllers to components readying the update to Angular 2.0"
+        ]
+    },
+    {
         "icon": "latitude.png",
         "title": "Latitude Geographics - QA Analyist", 
         "description":[
@@ -39,16 +48,6 @@ var data = {
             "Responsible for business development as well as managing and retaining existing accounts",
             "Meet face to face with executives and business owners to plan and build multi-year advertising campaigns",
             "Sold booth space in trade shows as well as attending and providing support to exhibitors and delegates"
-        ]
-    },
-    {
-        icon:"FutureShop.png",
-        title:"Future Shop - Product Expert",
-        description:[
-        "Consistently exceeded sales targets by over 20%",
-        "Increased revenue by completing a detailed competitor price comparison each week",
-        "Developed communication skills through listening to customers and providing them with service tailored to their specific needs and expectations",
-        "Trained seasonal staff and worked alongside others to rehearse sales techniques and give constructive criticism"
         ]
     }
     ]
