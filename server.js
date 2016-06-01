@@ -61,6 +61,36 @@ app.get('/', function(req, res, next){
     res.render('index', data);
 });
 
+app.get('/happyBirthdayJake', function(req, res, next){
+    res.send(`<!DOCTYPE html>
+		<html>
+		<head>
+		<style>
+		    body {
+			background-image: url("https://media.giphy.com/media/3osxY9gR0749TVGD7i/giphy.gif");
+		    }
+.center {
+    position: absolute;
+    width: 100%;
+    height: 50px;
+    color: green;
+    top: 50%;
+    left: 50%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 600%;
+}
+
+		</style>
+		</head>
+		<body>
+<div class='fullscreenDiv'>
+    <div class="center"><b>Fuck You</b></div>
+</div>
+
+		</body>
+		</html>`);
+});
+
 // Start the server
 server.listen(PORT);
 keepAlive(30);
