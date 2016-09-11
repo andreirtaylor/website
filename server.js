@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/public'))
 var data = {
    jobs:[
     {
-        "icon": "mda.png",
+        "icon": "mda.jpg",
         "title": "MDA - Software Developer",
         "description":[
             "Developed mission planning software for the RADARSAT constellation mission, a three-spacecraft fleet of Earth observation satellites",
