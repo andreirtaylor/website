@@ -3,7 +3,7 @@
  * to mirror all data sent by one client to all others (in the same
  * socket.io room)
  */
-var PORT = process.env.PORT ? process.env.PORT : 8008;
+var PORT = process.env.PORT ? process.env.PORT : 8008
 
 // Preliminaries
 var express = require('express'),
@@ -12,17 +12,35 @@ var express = require('express'),
     http = require('http'),
     server = http.createServer(app),
     path = require('path'),
-    keepAlive = require('./keepAlive.js');
+    keepAlive = require('./keepAlive.js'),
+    favicon = require('serve-favicon')
 
 //render the jade templates
-app.set('views', path.join(__dirname + '/public'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname + '/public'))
+app.set('view engine', 'jade')
+
+//favicon baby
+app.use(favicon(__dirname + '/public/favicon.ico'))
+
+// Statically serve pages from the public directory
+app.use(compression())
+app.use(express.static(__dirname + '/public'))
+
 
 var data = {
-    jobs:[
+   jobs:[
+    {
+        "icon": "mda.png",
+        "title": "MDA - Software Developer",
+        "description":[
+            "Developed mission planning software for the RADARSAT constellation mission, a three-spacecraft fleet of Earth observation satellites",
+            "Optimized C++ code"
+
+        ]
+    },
     {
         "icon": "IsolationNetwork.png",
-        "title": "Software Developer - Software Developer",
+        "title": "Isolation Network - Software Developer",
         "description":[
           "Developed a replacement user interface for Universal Media Group's content distribution system",
           "Created a Restful API for the existing SQL database using Entity Framework",
@@ -35,7 +53,6 @@ var data = {
         "description":[
             "Designed and Implemented a selennium based application that automated tedious tasks in testing",
             "Wrote a script that archived sites hosted on internal servers resulting in a 80% decrease in storage",
-            "Tested and released an update of the Geocortex HMTL5 Viewer",
             "Gained experience using restful API's"
         ]
     },
@@ -45,53 +62,17 @@ var data = {
         description:[
             "Worked with companies to develop a marketing strategy that best suits their individual needs",
             "Was responsible for multiple media channels which covered Printed and Electronic Media and Trade Shows",
-            "Responsible for business development as well as managing and retaining existing accounts",
-            "Meet face to face with executives and business owners to plan and build multi-year advertising campaigns",
-            "Sold booth space in trade shows as well as attending and providing support to exhibitors and delegates"
+            "Meet face to face with executives and business owners to plan and build multi-year advertising campaigns"
         ]
     }
     ]
 }
 
-// Statically serve pages from the public directory
-app.use(compression());
-app.use(express.static(__dirname + '/public'));
-
 app.get('/', function(req, res, next){
-    res.render('index', data);
-});
-
-app.get('/happyBirthdayJake', function(req, res, next){
-    res.send(`<!DOCTYPE html>
-		<html>
-		<head>
-		<style>
-		    body {
-			background-image: url("https://media.giphy.com/media/3osxY9gR0749TVGD7i/giphy.gif");
-		    }
-.center {
-    position: absolute;
-    width: 100%;
-    height: 50px;
-    color: green;
-    top: 50%;
-    left: 50%;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 600%;
-}
-
-		</style>
-		</head>
-		<body>
-<div class='fullscreenDiv'>
-    <div class="center"><b>Fuck You</b></div>
-</div>
-
-		</body>
-		</html>`);
-});
+    res.render('index', data)
+})
 
 // Start the server
-server.listen(PORT);
-keepAlive(30);
-console.log('Server listening on port ' + PORT);
+server.listen(PORT)
+keepAlive(30)
+console.log('Server listening on port ' + PORT)
