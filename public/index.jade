@@ -4,11 +4,11 @@ head
   meta(name='viewport', content='width=device-width, initial-scale=1.0 user-scalable=no')
   meta(name='description', content='')
   meta(name='author', content='')
-  title Andrei Taylor 
+  title Andrei Taylor
   // Bootstrap Core CSS
   link(href='css/bootstrap.min.css', rel='stylesheet', type='text/css')
   // Fonts
-  link(href='font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+  link(href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', rel='stylesheet', type='text/css')
   // I think Ill lose the css for now
   //link(href='css/animate.css', rel='stylesheet')
   // Squad theme CSS
@@ -41,16 +41,16 @@ head
             // possible dropdown menu
             //li.dropdown
             //  a.dropdown-toggle(href='#', data-toggle='dropdown')
-            //    | Projets 
+            //    | Projets
             //    b.caret
-            //  |           
+            //  |
             //  ul.dropdown-menu
             //    li
             //      a(href='#') Example menu
-            //    |             
+            //    |
             //    li
             //      a(href='#') Example menu
-            //    |             
+            //    |
             //    li
             //      a(href='#') Example menu
     // intro section
@@ -58,7 +58,7 @@ head
       .slogan
         h2
           | My name is Andrei Taylor
-        h4 I am a Software Engineer in Victoria, BC 
+        h4 I am a Software Engineer in Victoria, BC
       .page-scroll
         a.btn.btn-circle(href='#about')
           i.fa.fa-angle-double-down.animated
@@ -81,8 +81,8 @@ head
               br
               h4
                 | I am a 3rd year Software Engineering student at the University of Victoria.
-                | I in the past I have been the President of UVic AERO and an Account Manager for an Industrial Publishing Company.
-                | I spend much of my spare time learning about technology and working on open source projects. 
+                | In the past I have been the President of UVic AERO and a Account Manager for an Industrial Publishing Company.
+                | I spend much of my spare time learning about technology and working on open source projects.
                 If you are looking for a dedicated and driven individual to join your team than look no further.
               p
                 h3.
@@ -96,7 +96,7 @@ head
     // couple of variables to help make the logos the same size
     - var projWidth = 223
     - var projHeight = 223
-    - var projDimensions = 'width:' + projWidth + 'px; height:' + projHeight + 'px' + ';margin: 0 auto' 
+    - var projDimensions = 'width:' + projWidth + 'px; height:' + projHeight + 'px' + ';margin: 0 auto'
     section#projects.home-section.text-center
       .heading-about
         .container
@@ -104,7 +104,7 @@ head
             .col-lg-8.col-lg-offset-2
               .wow.bounceInDown(data-wow-delay='0.1s')
                 .section-heading
-                  h2 Extra Cirricular Projects 
+                  h2 Extra Cirricular Projects
       .container
         .row
           .col-lg-2.col-lg-offset-5
@@ -116,15 +116,15 @@ head
               .team.boxed-grey
                 .inner
                   h5 Uvic Aero
-                  |         
-                  p.subtitle 
+                  | 
+                  p.subtitle
                   |  Aero is a student lead team that participates in unmanned aircraft competitions.
-                  |  I designed and implemented a tracking algorithm that points an antenna at the plane to allow live image capture 
+                  |  I designed and implemented a tracking algorithm that points an antenna at the plane to allow live image capture
                   .avatar
                     a(href=AeroURl)
                       img.img-responsive.img-circle(src='img/team/aero.jpeg', alt='', style=projDimensions)
-                  p.subtitle 
-                  | languages: C and C++ 
+                  p.subtitle
+                  | languages: C and C++
                   p.subttle(style="margin:0px")
                     a(href=AeroURl)= "website"
           .col-xs-12.col-sm-6.col-lg-3
@@ -133,9 +133,9 @@ head
               .team.boxed-grey
                 .inner
                   h5 Board Game Tracking
-                  |                         
-                  p.subtitle 
-                  |  A Web application that allows real time tracking of money in board games like Monopoly or Powergrid. 
+                  | 
+                  p.subtitle
+                  |  A Web application that allows real time tracking of money in board games like Monopoly or Powergrid.
                   |  The server is Nodejs with Express Middleware, the frontend logic is controlled with Angular JS
                   .avatar
                     a(href=boardGameTrackingURL)
@@ -152,8 +152,8 @@ head
               .team.boxed-grey
                 .inner
                   h5 Battle Snake
-                  p.subtitle 
-                  |  Wrote an algorithm to control a snake in a battle arena. 
+                  p.subtitle
+                  |  Wrote an algorithm to control a snake in a battle arena.
                   |  The snake was controlled through a restful api,
                   |  we wrote our server using bottle and guinicorn
                   .avatar
@@ -173,7 +173,7 @@ head
                   h5 MPG Microprocessor Training
                   p.subtitle
                   | MPG is a hands-on training course for embedded systems.
-                  | I programed the board to play pong wirelessly against others. 
+                  | I programed the board to play pong wirelessly against others.
                   | I learned about programming embedded systems and building circuits
                   .avatar
                     a(href=MPGUrl)
@@ -191,7 +191,7 @@ head
             .col-lg-8.col-lg-offset-2
               .wow.bounceInDown(data-wow-delay='0.2s')
                 .section-heading
-                  h2 Work Experience 
+                  h2 Work Experience
       // couple of variables to help make the logos the same size
       - var logoWidth = 100
       - var logoHeight = 50
@@ -211,7 +211,7 @@ head
                     h5= job.title
                     each line, val in job.description
                       if val % 2 == 0
-                        p= line 
+                        p= line
                       else
                         p
                           b= line
@@ -227,21 +227,26 @@ head
                   h2 Get in touch
       .container
         .row
-          .col-xs-4.col-lg-2.col-lg-offset-3
+          .col-xs-3.col-lg-2.col-lg-offset-2
             .wow.bounceInDown(data-wow-delay='0.3s')
               a(href="https://github.com/andreirtaylor")
                 i.fa.fa-github.fa-5x.text-center
                 p Github
-          .col-xs-4.col-lg-2
+          .col-xs-3.col-lg-2
             .wow.bounceInDown(data-wow-delay='0.3s')
               a(href="https://ca.linkedin.com/pub/andrei-ryan-taylor/2a/86a/aa9/en")
                 i.fa.fa-linkedin.fa-5x
                 p Linked In
-          .col-xs-4.col-lg-2
+          .col-xs-3.col-lg-2
             .wow.bounceInDown(data-wow-delay='0.3s')
               a(href='mailto:andreirtaylor@gmail.com')
-                i.fa.fa-envelope-o.fa-5x 
+                i.fa.fa-envelope-o.fa-5x
                 p Email
+          .col-xs-3.col-lg-2
+            .wow.bounceInDown(data-wow-delay='0.3s')
+              a(href="https://medium.com/@andreirtaylor")
+                i.fa.fa-medium.fa-5x
+                p Medium
           .col-lg-3
     // /Section: contact
     footer
