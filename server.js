@@ -72,6 +72,10 @@ app.get('/', function(req, res, next){
     res.render('index', data)
 })
 
+app.get('/nqueens', function(req, res, next){
+    res.sendfile('public/nqueens.html')
+})
+
 // Start the server
 server.listen(PORT)
 keepAlive(30)
