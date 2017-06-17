@@ -26,9 +26,7 @@ Vue.component('indexed-tbl', {
           <tr>
             <th v-for="(val, index) in arr">
               <span v-if="decl">
-                <span v-if="index > 0">
-                  {{index - (arr.length/2)}}
-                </span>
+                  {{index - ((arr.length + 1) /2)}}
               </span>
               <span v-else>
                 {{index}}
@@ -153,7 +151,7 @@ var vm = new Vue({
       this.solutions = 0;
       this.push_n(this.rows, this.N);
       this.cols = new Array(this.N).fill({ val: 0 });
-      this.down_diag = new Array(this.N*2).fill({ val: 0 });
+      this.down_diag = new Array(this.N*2 - 1).fill({ val: 0 });
       this.up_diag = new Array(this.N*2 -1).fill({ val: 0 });
       this.game_board = [];
       for(let i = 0; i < this.N; ++i){
@@ -199,7 +197,11 @@ var vm = new Vue({
       }
     },
     clear_highlights:function(){
-      for(let i = 0; i < this.N * 2 -1; ++i){
+      //this.up_diag.forEach(function(val){ 
+      //  delete val.hover; })
+      //this.down_diag.forEach(function(val){ 
+      //  delete val.hover; })
+      for(let i = 0; i < this.N * 2 - 1; ++i){
         let curr_down = this.down_diag[i];
         Vue.set(this.down_diag, i, {val: curr_down.val});
         let curr_up = this.up_diag[i];
@@ -214,10 +216,15 @@ var vm = new Vue({
     },
     queen_hover:function(arg){
       this.clear_highlights();
-      this.draw_incline({val:arg.row + arg.col});
-      this.draw_decline({val:arg.row - arg.col + this.N});
+      if ((arg.row == 0 && arg.col == 0) || (arg.row == this.N -1 && arg.col == this.N -1) ){
+        this.draw_decline({val:arg.row - arg.col + this.N});
+        this.draw_incline({val:arg.row + arg.col});
+      } else {
+        this.draw_incline({val:arg.row + arg.col});
+        this.draw_decline({val:arg.row - arg.col + this.N});
+      }
       this.up_diag[arg.row + arg.col].hover = this.up_color;
-      this.down_diag[arg.row - arg.col + this.N].hover = this.down_color;
+      this.down_diag[arg.row - arg.col + (this.N - 1)].hover = this.down_color;
     }
   },
   created: function () {
@@ -230,7 +237,10 @@ function * gen_next(){
 }
 
 function * N_Queens(col){
-  if(col >= vm.N) yield ++vm.solutions;
+  if(col >= vm.N){
+    yield ++vm.solutions;
+    return;
+  }
   for(let row = 0; row < vm.N; ++row){
     vm.tries++
     if(set_value(row, col)){
@@ -243,7 +253,7 @@ function * N_Queens(col){
 
 function unset_value(row, col){
   // if any of the moves are invalid
-  Vue.set(vm.down_diag, row-col + vm.N, {val: 0});
+  Vue.set(vm.down_diag, row-col + (vm.N - 1), {val: 0});
   Vue.set(vm.up_diag, row+col, {val: 0});
   Vue.set(vm.rows, row, {val: 0});
   Vue.set(vm.cols, col, {val: 0});
@@ -251,13 +261,14 @@ function unset_value(row, col){
 }
 function set_value(row, col){
   // if any of the moves are invalid
-  if( vm.down_diag[row-col + vm.N].val ||
+  if( vm.down_diag[row-col + (vm.N - 1)].val ||
     vm.up_diag[row+col].val ||
     vm.rows[row].val ||
     vm.cols[col].val)
       return false;
 
-  Vue.set(vm.down_diag, row-col + vm.N, {val: 1});
+
+  Vue.set(vm.down_diag, row-col + (vm.N - 1), {val: 1});
   Vue.set(vm.up_diag, row+col, {val: 1});
   Vue.set(vm.rows, row, {val: 1});
   Vue.set(vm.cols, col, {val: 1});
