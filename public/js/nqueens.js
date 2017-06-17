@@ -1,5 +1,31 @@
+Vue.component('tbl-cell', {
+  props: ['val', 'ind'],
+  template: `
+      <td v-on:mouseleave="leave" v-on:mouseenter="send" v-bind:class="{ 'bg-primary': val, 'bg-danger': hover }"></td>
+`,
+  data: function(){
+    return {
+      hover: false
+    }
+  },
+  methods: {
+    send: function(){
+      //the first index is never filled
+      if(this.ind == 0) return;
+      this.hover = !this.hover;
+      this.$emit('hovered', { val: this.ind })
+    },
+    leave: function(){
+      //the first index is never filled
+      if(this.ind == 0) return;
+      this.hover = !this.hover;
+      this.$emit('leave', { val: this.ind })
+    }
+  }
+});
+
 Vue.component('indexed-tbl', {
-  props: ['arr', 'title'],
+  props: ['arr', 'title', 'decl'],
   template: `
   <div class="container-fluid">
     <div class="col-sm-2">
@@ -10,26 +36,37 @@ Vue.component('indexed-tbl', {
         <thead>
           <tr>
             <th v-for="(val, index) in arr">
-              {{index}}
+              <span v-if="decl"> 
+                <span v-if="index > 0"> 
+                  {{index - (arr.length/2)}}
+                </span>
+              </span>
+              <span v-else> 
+                {{index}}
+              </span>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td v-bind:class="{ 'bg-primary': val }" v-for="val in arr">
-            </td>
+            <tbl-cell :key="ind" @hovered="poop" v-bind:ind="ind" v-bind:val="val" v-for="(val, ind) in arr"></tbl-cell>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 `
+, methods: {
+  poop: function(arg){
+    this.$emit("hovered", arg)
+  }
+}
 });
 
 Vue.component('queen', {
   props: ['ison'],
   template: `
-    <div >
+    <div>
       <img height="50px" width="50px"
         class="img-responsive center-block"
         src="https://openclipart.org/download/275291/3_Silueta_Dama_Negra_by_DG-RA.svg"
@@ -53,11 +90,11 @@ Vue.component('game-board', {
             <tr v-for="(row, r_ind) in arr">
               <td v-for="(cell, c_ind) in row" style="padding:0; margin:0">
                 <div v-if="(r_ind % 2 && c_ind % 2) || !(r_ind % 2) && (c_ind + 1) % 2" >
-                  <queen v-bind:ison=cell style="background-color: grey" >
+                  <queen v-bind:highlight="cell.highlight" v-bind:ison="cell.val" v-bind:style="{'background-color':cell.highlight || 'grey'}">
                   </queen>
                 </div>
                 <div v-else >
-                  <queen v-bind:ison=cell>
+                  <queen v-bind:style="{'background-color':cell.highlight}"v-bind:ison="cell.val">
                   </queen>
                 </div>
               </span>
@@ -84,6 +121,7 @@ var vm = new Vue({
     game_board: [[]],
     solutions: 0,
     run: null,
+    tries: 0,
   },
   methods: {
     push_n: function (arr, n){
@@ -106,14 +144,49 @@ var vm = new Vue({
       this.push_n(this.rows, this.N);
       this.cols = new Array(this.N).fill(0);
       this.down_diag = new Array(this.N*2).fill(0);
-      this.up_diag = new Array(this.N*2).fill(0);
+      this.up_diag = new Array(this.N*2 -1).fill(0);
       this.game_board = [];
       for(let i = 0; i < this.N; ++i){
-        this.game_board.push(new Array(this.N).fill(0));
+        this.game_board.push(new Array(this.N).fill({ val: 0 }));
       }
 
       this.run = gen_next()
+      this.tries = 0
     },
+    get_decline: function(from){
+      this.clear_highlights();
+      let row = 0, col = this.N - from.val;
+      if(from.val >= this.N){
+        row = from.val % (this.N), col = 0;
+      }
+      while(row < this.N && col < this.N){
+        let val = this.game_board[row][col].val;
+        Vue.set(vm.game_board[row], col, { highlight: "red", val: val});
+        row++; col++;
+      }
+    },
+    get_incline: function(from){
+      this.clear_highlights();
+      let row = from.val, col = 0;
+      if(from.val >= this.N){
+        // need to handle the case of this being the last diagonal
+        row = this.N - 1 , col = ((from.val == this.N * 2 - 2)? this.N - 1 : from.val % (this.N - 1));
+      }
+      console.log(row, col)
+      while(row >= 0 && col < this.N){
+        let val = this.game_board[row][col].val;
+        Vue.set(vm.game_board[row], col, { highlight: "red", val: val});
+        row--; col++;
+      }
+    },
+    clear_highlights:function(){
+      for(let row = 0; row < this.N; ++row){
+        for(let col = 0; col < this.N; ++col){
+          let val = this.game_board[row][col].val;
+          Vue.set(vm.game_board[row], col, { val: val});
+        }
+      }
+    }
   },
   created: function () {
     this.reset()
@@ -127,6 +200,7 @@ function * gen_next(){
 function * N_Queens(col){
   if(col >= vm.N) yield ++vm.solutions;
   for(let row = 0; row < vm.N; ++row){
+    vm.tries++
     if(set_value(row, col)){
       yield 0;
       yield* N_Queens(col+1);
@@ -141,7 +215,7 @@ function unset_value(row, col){
   Vue.set(vm.up_diag, row+col, 0);
   Vue.set(vm.rows, row, 0);
   Vue.set(vm.cols, col, 0);
-  Vue.set(vm.game_board[row], col, 0);
+  Vue.set(vm.game_board[row], col, {val: 0});
 }
 function set_value(row, col){
   // if any of the moves are invalid
@@ -151,10 +225,13 @@ function set_value(row, col){
     vm.cols[col])
       return false;
 
+  console.log(row, col)
   Vue.set(vm.down_diag, row-col + vm.N, 1);
+  console.log(vm.down_diag)
   Vue.set(vm.up_diag, row+col, 1);
   Vue.set(vm.rows, row, 1);
   Vue.set(vm.cols, col, 1);
-  Vue.set(vm.game_board[row], col, 1);
+  //Vue.set(vm.game_board[row], col, 1);
+  Vue.set(vm.game_board[row], col, {val: 1});
   return true;
 }
