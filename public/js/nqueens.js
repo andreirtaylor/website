@@ -26,7 +26,7 @@ Vue.component('indexed-tbl', {
           <tr>
             <th v-for="(val, index) in arr">
               <span v-if="decl">
-                  {{index - ((arr.length + 1) /2)}}
+                  {{index + 1- ((arr.length + 1) /2)}}
               </span>
               <span v-else>
                 {{index}}
