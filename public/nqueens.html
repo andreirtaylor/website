@@ -17,17 +17,17 @@
 
   <body>
     <div id="n-queens">
-      <indexed-tbl title="rows" v-bind:arr="rows"></indexed-tbl>
-      <indexed-tbl title="cols" v-bind:arr="cols"></indexed-tbl>
-      <indexed-tbl title="down diag" v-bind:arr="down_diag"></indexed-tbl>
-      <indexed-tbl title="up_diag" v-bind:arr="up_diag"></indexed-tbl>
+      <indexed-tbl title="Column" v-bind:arr="rows"></indexed-tbl>
+      <indexed-tbl title="Row" v-bind:arr="cols"></indexed-tbl>
+      <indexed-tbl title="Incline" v-bind:arr="down_diag"></indexed-tbl>
+      <indexed-tbl title="Decline" v-bind:arr="up_diag"></indexed-tbl>
       <game-board v-bind:arr="game_board"></game-board>
 
-      <button v-on:click="run.next()">Get Next Move</button>
-      <button v-on:click="get_solution()">Next Solution</button>
-      <button v-on:click="solve()">Solve</button>
-      <button v-on:click="reset()">Reset</button>
-      <input v-model.number="N" type="number" v-on:change="reset">
+      <button class="btn btn-info" v-on:click="run.next()">Get Next Move</button>
+      <button class="btn btn-info"  v-on:click="get_solution()">Next Solution</button>
+      <button class="btn btn-success" v-on:click="solve()">Solve</button>
+      <button class="btn btn-danger" v-on:click="reset()">Reset</button>
+      <input  v-model.number="N" type="number" v-on:change="reset">
       <p>{{solutions}}</p>
     </div>
   </body>

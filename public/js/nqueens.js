@@ -1,39 +1,42 @@
-
 Vue.component('indexed-tbl', {
   props: ['arr', 'title'],
   template: `
-      <div>
-        <h2>{{title}}</h2>
-        <table class="table">
-          <thead>
-            <tr>
-              <th v-for="(val, index) in arr">
-                {{index}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th v-for="val in arr">
-                {{ val }}
-              </th>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="container-fluid">
+    <div class="col-sm-2">
+      <h3>{{title}}</h3>
+    </div>
+    <div class="col-sm-10">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th v-for="(val, index) in arr">
+              {{index}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td v-bind:class="{ 'bg-primary': val }" v-for="val in arr">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 `
 });
+
 Vue.component('queen', {
   props: ['ison'],
   template: `
     <div >
       <img height="50px" width="50px"
-        class="img-responsive"
+        class="img-responsive center-block"
         src="https://openclipart.org/download/275291/3_Silueta_Dama_Negra_by_DG-RA.svg"
         v-if="ison == 1"/>
       <img
         height="50px" width="50px"
-        class="img-responsive" style="opacity:0"
+        class="img-responsive center-block" style="opacity:0"
         src="https://openclipart.org/download/275291/3_Silueta_Dama_Negra_by_DG-RA.svg"
         v-else>
     </div>
@@ -45,12 +48,19 @@ Vue.component('game-board', {
   template: `
     <div class="container-fluid">
       <div class="col-md-8 offset-md-2 col-lg-6 col-lg-offset-3">
-        <table class="table">
+        <table class="table table-bordered table-active">
           <tbody>
-            <tr v-for="row in arr">
-              <td v-for="cell in row">
-                <queen v-bind:ison=cell>
-                </queen>
+            <tr v-for="(row, r_ind) in arr">
+              <td v-for="(cell, c_ind) in row" style="padding:0; margin:0">
+                <div v-if="(r_ind % 2 && c_ind % 2) || !(r_ind % 2) && (c_ind + 1) % 2" >
+                  <queen v-bind:ison=cell style="background-color: grey" >
+                  </queen>
+                </div>
+                <div v-else >
+                  <queen v-bind:ison=cell>
+                  </queen>
+                </div>
+              </span>
               </td>
             </tr>
           </tbody>
@@ -141,7 +151,6 @@ function set_value(row, col){
     vm.cols[col])
       return false;
 
-  console.log(row + col, vm.N)
   Vue.set(vm.down_diag, row-col + vm.N, 1);
   Vue.set(vm.up_diag, row+col, 1);
   Vue.set(vm.rows, row, 1);
