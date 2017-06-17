@@ -1,21 +1,14 @@
 Vue.component('tbl-cell', {
-  props: ['val', 'ind'],
+  props: ['val', 'ind', 'hover'],
   template: `
-      <td v-on:mouseleave="leave" v-on:mouseenter="send" v-bind:class="{ 'bg-primary': val, 'bg-danger': hover }"></td>
+      <td v-bind:style="{'background-color':hover}"  v-on:mouseleave="leave" v-on:mouseenter="send" v-bind:class="{ 'bg-primary': val }"></td>
 `,
-  data: function(){
-    return {
-      hover: false
-    }
-  },
   methods: {
     send: function(){
-      this.hover = !this.hover;
       this.$emit('hovered', { val: this.ind })
     },
     leave: function(){
-      this.hover = !this.hover;
-      this.$emit('leave', { val: this.ind })
+      this.$emit('leave')
     }
   }
 });
@@ -32,12 +25,12 @@ Vue.component('indexed-tbl', {
         <thead>
           <tr>
             <th v-for="(val, index) in arr">
-              <span v-if="decl"> 
-                <span v-if="index > 0"> 
+              <span v-if="decl">
+                <span v-if="index > 0">
                   {{index - (arr.length/2)}}
                 </span>
               </span>
-              <span v-else> 
+              <span v-else>
                 {{index}}
               </span>
             </th>
@@ -45,7 +38,7 @@ Vue.component('indexed-tbl', {
         </thead>
         <tbody>
           <tr>
-            <tbl-cell :key="ind" @hovered="poop" v-bind:ind="ind" v-bind:val="val" v-for="(val, ind) in arr"></tbl-cell>
+            <tbl-cell :key="ind" @leave="leave" @hovered="poop" v-bind:ind="ind" v-bind:hover="item.hover" v-bind:val="item.val" v-for="(item, ind) in arr"></tbl-cell>
           </tr>
         </tbody>
       </table>
@@ -56,10 +49,10 @@ Vue.component('indexed-tbl', {
     poop: function(arg){
       this.$emit("hovered", arg)
     },
+    leave: function(arg){
+      this.$emit("leave", arg)
+    },
   }
-  , created: function () {
-    this.reset()
-  },
 });
 
 Vue.component('queen', {
@@ -101,7 +94,7 @@ Vue.component('game-board', {
                   </queen>
                 </div>
                 <div v-else >
-                  <queen @queenhover="passup" v-bind:col=c_ind v-bind:row=r_ind v-bind:style="{'background-color':cell.highlight}"v-bind:ison="cell.val">
+                  <queen @leave="leave" @queenhover="passup" v-bind:col=c_ind v-bind:row=r_ind v-bind:style="{'background-color':cell.highlight}"v-bind:ison="cell.val">
                   </queen>
                 </div>
               </span>
@@ -115,6 +108,9 @@ Vue.component('game-board', {
   , methods: {
     passup: function(arg){
       this.$emit("queenhover", arg)
+    },
+    leave: function(){
+      this.$emit("leave");
     }
   }
 });
@@ -134,6 +130,8 @@ var vm = new Vue({
     solutions: 0,
     run: null,
     tries: 0,
+    up_color: "red",
+    down_color: "green",
   },
   methods: {
     push_n: function (arr, n){
@@ -154,9 +152,9 @@ var vm = new Vue({
     reset: function () {
       this.solutions = 0;
       this.push_n(this.rows, this.N);
-      this.cols = new Array(this.N).fill(0);
-      this.down_diag = new Array(this.N*2).fill(0);
-      this.up_diag = new Array(this.N*2 -1).fill(0);
+      this.cols = new Array(this.N).fill({ val: 0 });
+      this.down_diag = new Array(this.N*2).fill({ val: 0 });
+      this.up_diag = new Array(this.N*2 -1).fill({ val: 0 });
       this.game_board = [];
       for(let i = 0; i < this.N; ++i){
         this.game_board.push(new Array(this.N).fill({ val: 0 }));
@@ -168,6 +166,8 @@ var vm = new Vue({
     get_decline: function(from){
       this.clear_highlights();
       this.draw_decline(from);
+      let curr_val = this.down_diag[from.val];
+      Vue.set(this.down_diag, from.val, {val: curr_val.val, hover: this.up_color});
     },
     draw_decline: function(from){
       let row = 0, col = this.N - from.val;
@@ -176,13 +176,15 @@ var vm = new Vue({
       }
       while(row < this.N && col < this.N){
         let val = this.game_board[row][col].val;
-        Vue.set(vm.game_board[row], col, { highlight: "red", val: val});
+        Vue.set(vm.game_board[row], col, { highlight: this.down_color, val: val});
         row++; col++;
       }
     },
     get_incline: function(from){
       this.clear_highlights();
       this.draw_incline(from);
+      let curr_val = this.up_diag[from.val];
+      Vue.set(this.up_diag, from.val, {val: curr_val.val, hover: this.up_color});
     },
     draw_incline: function(from){
       let row = from.val, col = 0;
@@ -192,11 +194,17 @@ var vm = new Vue({
       }
       while(row >= 0 && col < this.N){
         let val = this.game_board[row][col].val;
-        Vue.set(vm.game_board[row], col, { highlight: "red", val: val});
+        Vue.set(vm.game_board[row], col, { highlight: this.up_color,  val: val});
         row--; col++;
       }
     },
     clear_highlights:function(){
+      for(let i = 0; i < this.N * 2 -1; ++i){
+        let curr_down = this.down_diag[i];
+        Vue.set(this.down_diag, i, {val: curr_down.val});
+        let curr_up = this.up_diag[i];
+        Vue.set(this.up_diag, i, {val: curr_up.val});
+      }
       for(let row = 0; row < this.N; ++row){
         for(let col = 0; col < this.N; ++col){
           let val = this.game_board[row][col].val;
@@ -208,6 +216,8 @@ var vm = new Vue({
       this.clear_highlights();
       this.draw_incline({val:arg.row + arg.col});
       this.draw_decline({val:arg.row - arg.col + this.N});
+      this.up_diag[arg.row + arg.col].hover = this.up_color;
+      this.down_diag[arg.row - arg.col + this.N].hover = this.down_color;
     }
   },
   created: function () {
@@ -233,24 +243,24 @@ function * N_Queens(col){
 
 function unset_value(row, col){
   // if any of the moves are invalid
-  Vue.set(vm.down_diag, row-col + vm.N, 0);
-  Vue.set(vm.up_diag, row+col, 0);
-  Vue.set(vm.rows, row, 0);
-  Vue.set(vm.cols, col, 0);
+  Vue.set(vm.down_diag, row-col + vm.N, {val: 0});
+  Vue.set(vm.up_diag, row+col, {val: 0});
+  Vue.set(vm.rows, row, {val: 0});
+  Vue.set(vm.cols, col, {val: 0});
   Vue.set(vm.game_board[row], col, {val: 0});
 }
 function set_value(row, col){
   // if any of the moves are invalid
-  if( vm.down_diag[row-col + vm.N] ||
-    vm.up_diag[row+col] ||
-    vm.rows[row] ||
-    vm.cols[col])
+  if( vm.down_diag[row-col + vm.N].val ||
+    vm.up_diag[row+col].val ||
+    vm.rows[row].val ||
+    vm.cols[col].val)
       return false;
 
-  Vue.set(vm.down_diag, row-col + vm.N, 1);
-  Vue.set(vm.up_diag, row+col, 1);
-  Vue.set(vm.rows, row, 1);
-  Vue.set(vm.cols, col, 1);
+  Vue.set(vm.down_diag, row-col + vm.N, {val: 1});
+  Vue.set(vm.up_diag, row+col, {val: 1});
+  Vue.set(vm.rows, row, {val: 1});
+  Vue.set(vm.cols, col, {val: 1});
   Vue.set(vm.game_board[row], col, {val: 1});
   return true;
 }
