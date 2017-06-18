@@ -246,6 +246,7 @@ function * N_Queens(col){
   for(let row = 0; row < vm.N; ++row){
     vm.tries++
     if(set_value(row, col)){
+      // only here to stop execution after each queen is placed
       yield 0;
       yield* N_Queens(col+1);
       unset_value(row, col);

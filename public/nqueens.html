@@ -19,8 +19,8 @@
     <div id="n-queens" >
       <indexed-tbl title="Row" v-bind:arr="rows"></indexed-tbl>
       <indexed-tbl title="Column" v-bind:arr="cols"></indexed-tbl>
-      <indexed-tbl @leave="clear_highlights" @hovered="get_incline" title="Incline" v-bind:arr="up_diag"></indexed-tbl>
-      <indexed-tbl @leave="clear_highlights" @hovered="get_decline"title="Decline" decl=true v-bind:arr="down_diag"></indexed-tbl>
+      <indexed-tbl @leave="clear_highlights" @hovered="get_incline" title="Row + Col" v-bind:arr="up_diag"></indexed-tbl>
+      <indexed-tbl @leave="clear_highlights" @hovered="get_decline"title="Row - Col" decl=true v-bind:arr="down_diag"></indexed-tbl>
       <game-board @leave="clear_highlights" @queenhover="queen_hover" v-bind:arr="game_board"></game-board>
 
 
