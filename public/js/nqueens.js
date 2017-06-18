@@ -5,7 +5,7 @@ Vue.component('tbl-cell', {
 `,
   methods: {
     send: function(){
-      this.$emit('hovered', { val: this.ind })
+      this.$emit('hovered', { val: this.ind})
     },
     leave: function(){
       this.$emit('leave')
@@ -163,11 +163,13 @@ var vm = new Vue({
     },
     get_decline: function(from){
       this.clear_highlights();
-      this.draw_decline(from);
       let curr_val = this.down_diag[from.val];
-      Vue.set(this.down_diag, from.val, {val: curr_val.val, hover: this.up_color});
+      Vue.set(this.down_diag, from.val, {val: curr_val.val, hover: this.down_color});
+      from.val++;
+      this.draw_decline(from);
     },
     draw_decline: function(from){
+      console.log(from)
       let row = 0, col = this.N - from.val;
       if(from.val >= this.N){
         row = from.val % (this.N), col = 0;
