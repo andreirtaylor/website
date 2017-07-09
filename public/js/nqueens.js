@@ -17,14 +17,14 @@ Vue.component('indexed-tbl', {
   props: ['arr', 'title', 'decl'],
   template: `
   <div class="container-fluid">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <h3>{{title}}</h3>
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-9">
       <table class="table table-striped">
         <thead>
           <tr>
-            <th v-for="(val, index) in arr">
+            <th class="text-center" v-for="(val, index) in arr">
               <span v-if="decl">
                   {{index + 1- ((arr.length + 1) /2)}}
               </span>
@@ -82,13 +82,13 @@ Vue.component('game-board', {
   props: ['arr'],
   template: `
     <div class="container-fluid">
-      <div class="col-md-8 offset-md-2 col-lg-6 col-lg-offset-3">
+      <div class="col-sm-8 col-sm-offset-2  col-lg-6 col-lg-offset-3">
         <table class="table table-bordered table-active">
           <tbody>
             <tr v-for="(row, r_ind) in arr">
               <td v-for="(cell, c_ind) in row" style="padding:0; margin:0" @mouseenter="">
                 <div v-if="(r_ind % 2 && c_ind % 2) || !(r_ind % 2) && (c_ind + 1) % 2" >
-                  <queen @queenhover="passup" v-bind:col=c_ind v-bind:row=r_ind   v-bind:highlight="cell.highlight" v-bind:ison="cell.val" v-bind:style="{'background-color':cell.highlight || 'grey'}">
+                  <queen @leave="leave" @queenhover="passup" v-bind:col=c_ind v-bind:row=r_ind   v-bind:highlight="cell.highlight" v-bind:ison="cell.val" v-bind:style="{'background-color':cell.highlight || 'grey'}">
                   </queen>
                 </div>
                 <div v-else >
@@ -101,7 +101,7 @@ Vue.component('game-board', {
           </tbody>
         </table>
       </div>
-    </div>
+    </div> 
 `
   , methods: {
     passup: function(arg){
@@ -123,7 +123,7 @@ var vm = new Vue({
     cols: [],
     down_diag: [],
     up_diag: [],
-    N: 8,
+    N: 4,
     game_board: [[]],
     solutions: 0,
     run: null,
@@ -149,12 +149,12 @@ var vm = new Vue({
     },
     reset: function () {
       this.solutions = 0;
-      this.push_n(this.rows, this.N);
+      this.rows = new Array(this.N).fill({ val: 0 });
       this.cols = new Array(this.N).fill({ val: 0 });
       this.down_diag = new Array(this.N*2 - 1).fill({ val: 0 });
       this.up_diag = new Array(this.N*2 -1).fill({ val: 0 });
       this.game_board = [];
-      for(let i = 0; i < this.N; ++i){
+     for(let i = 0; i < this.N; ++i){
         this.game_board.push(new Array(this.N).fill({ val: 0 }));
       }
 
@@ -169,7 +169,6 @@ var vm = new Vue({
       this.draw_decline(from);
     },
     draw_decline: function(from){
-      console.log(from)
       let row = 0, col = this.N - from.val;
       if(from.val >= this.N){
         row = from.val % (this.N), col = 0;
@@ -236,6 +235,28 @@ var vm = new Vue({
 
 function * gen_next(){
   yield* N_Queens(0);
+  // this is just so I could make the visuals for brute force.
+  //yield* N_Queens_BF(0);
+}
+
+function is_solution(){
+  // I am too lazy to write this...
+}
+
+function * N_Queens_BF(col){
+  if(col >= vm.N){
+    return;
+  }
+  for(let row = 0; row < vm.N; ++row){
+    vm.tries++
+    set_value(row, col)
+    // only here to stop execution after each queen is placed
+    yield* N_Queens_BF(col+1);
+    unset_value(row, col);
+    if(is_solution()){
+      yield ++vm.solutions;
+    }
+  }
 }
 
 function * N_Queens(col){
@@ -245,7 +266,8 @@ function * N_Queens(col){
   }
   for(let row = 0; row < vm.N; ++row){
     vm.tries++
-    if(set_value(row, col)){
+    if(is_valid_move(row,col)){
+      set_value(row, col)
       // only here to stop execution after each queen is placed
       yield 0;
       yield* N_Queens(col+1);
@@ -262,15 +284,16 @@ function unset_value(row, col){
   Vue.set(vm.cols, col, {val: 0});
   Vue.set(vm.game_board[row], col, {val: 0});
 }
+
+function is_valid_move(row,col){
+  return !(vm.down_diag[row-col + (vm.N - 1)].val ||
+          vm.up_diag[row+col].val ||
+          vm.rows[row].val ||
+          vm.cols[col].val);
+}
+
 function set_value(row, col){
   // if any of the moves are invalid
-  if( vm.down_diag[row-col + (vm.N - 1)].val ||
-    vm.up_diag[row+col].val ||
-    vm.rows[row].val ||
-    vm.cols[col].val)
-      return false;
-
-
   Vue.set(vm.down_diag, row-col + (vm.N - 1), {val: 1});
   Vue.set(vm.up_diag, row+col, {val: 1});
   Vue.set(vm.rows, row, {val: 1});
