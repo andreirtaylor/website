@@ -43,7 +43,7 @@ var data = {
         "title": "Isolation Network - Software Developer",
         "description":[
           "Developed a replacement user interface for Universal Media Group's content distribution system",
-          "Created a Restful API for the existing SQL database using Entity Framework",
+          "Created a Restful API for the existing SQL database using Node.js",
           "Responsible for upgrading angular controllers to components readying the update to Angular 2.0"
         ]
     },
