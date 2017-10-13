@@ -76,6 +76,10 @@ app.get('/nqueens', function(req, res, next){
     res.sendfile('public/nqueens.html')
 })
 
+app.get('/hack', function(req, res, next){
+    res.sendfile('public/stanford_notebook.pdf')
+})
+
 // Start the server
 server.listen(PORT)
 keepAlive(30)
