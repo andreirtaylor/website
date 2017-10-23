@@ -55,15 +55,6 @@ var data = {
             "Wrote a script that archived sites hosted on internal servers resulting in a 80% decrease in storage",
             "Gained experience using restful API's"
         ]
-    },
-    {
-        icon:"KCI.gif",
-        title:"KCI World - Account Manager",
-        description:[
-            "Worked with companies to develop a marketing strategy that best suits their individual needs",
-            "Was responsible for multiple media channels which covered Printed and Electronic Media and Trade Shows",
-            "Meet face to face with executives and business owners to plan and build multi-year advertising campaigns"
-        ]
     }
     ]
 }
