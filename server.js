@@ -15,9 +15,9 @@ var express = require('express'),
     keepAlive = require('./keepAlive.js'),
     favicon = require('serve-favicon')
 
-//render the jade templates
+//render the pug templates
 app.set('views', path.join(__dirname + '/public'))
-app.set('view engine', 'jade')
+app.set('view engine', 'pug')
 
 //favicon baby
 app.use(favicon(__dirname + '/public/favicon.ico'))
