@@ -12,7 +12,6 @@ var express = require('express'),
     http = require('http'),
     server = http.createServer(app),
     path = require('path'),
-    keepAlive = require('./keepAlive.js'),
     favicon = require('serve-favicon')
 
 //render the pug templates
@@ -73,5 +72,4 @@ app.get('/hack', function(req, res, next){
 
 // Start the server
 server.listen(PORT)
-keepAlive(30)
 console.log('Server listening on port ' + PORT)
