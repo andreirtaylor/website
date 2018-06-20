@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <head>
+    <title>Spaces View</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <div id="thisopenspace" >
+      <h1> Available Spaces </h1>
+      </br>
+      <spaces-list v-bind:spaces="spaces"></spaces-list>
+      </br>
+      <pages v-if="!isNaN(current_page)"
+             v-on:update:page="current_page= $event"
+             v-bind:current_page="current_page">
+      </pages>
+    </div>
+  </body>
+
+  <!-- TEMPLATES -->
+  <script type="text/x-template" id="space-template">
+    <div class="col-sm-3">
+      <div class="card" >
+        <h5 class="card-header text-truncate">{{spaceData.name}}</h5>
+        <img class="card-img-top" :src=spaceData.primary_photo_css_url_small alt="Card image cap"/>
+        <div class="card-body">
+          <h5 class="card-title">Pricing: {{spaceData.hourly_price}}/hour or {{spaceData.daily_price}}/day</h5>
+          <h5 class="card-title">Square Ft: {{spaceData.square_footage}}</h5>
+          <h5 class="card-title">Capacity: {{spaceData.capacity}} people</h5>
+          <p class="card-text text-right">Views: {{spaceData.views_count}}</p>
+        </div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="spaces-list-template">
+    <div class="card-group">
+      <div class="row">
+        <space v-for="space in spaces"
+          v-bind:spaceData="space"
+          v-bind:key="space.id"/>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/x-template" id="pages-template">
+    <div>
+    <ul class="pagination justify-content-center">
+      <li 
+        v-on:click="$emit('update:page', (current_page|0) - 1)" 
+        class="page-item">
+          <a class="page-link" href="#">Previous</a>
+      </li>
+      <li class="page-item active"> 
+          <a class="page-link" href="#">{{current_page}}</a>
+      </l1>
+      <li 
+        v-on:click="$emit('update:page', (current_page|0) + 1)" 
+        class="page-item">
+          <a class="page-link" href="#">Next</a>
+      </li>
+    </ul>
+  </div>
+  </script>
+  <!-- /TEMPLATES -->
+
+  <!-- APPLICATION -->
+  <script>
+
+// show an individual space 
+// spaceData is an object that contains these keys
+//  ["id", "name", "address", "hourly_price", "daily_price", "square_footage", "capacity", "views_count", "primary_photo_css_url_small"]
+// which are relatively self explanatory....
+Vue.component('space', { props: ['spaceData'], template: `#space-template`});
+// shows the list of spaces
+Vue.component('spaces-list', { props: ['spaces'], template: `#spaces-list-template`});
+// shows the current page and gives the ability to switch pages
+Vue.component('pages', { props: ['current_page'], template: `#pages-template`});
+
+// method to change the page of the application
+let syncPages = async (page) => {
+  const req = await fetch(`https://thisopenspace.com/lhl-test?page=${page}`);
+  // because of the way this api is defined you only know you are going over the pages
+  // when you reach a 404. However a 404 can happen for other reasons....
+  // but I dont have any ability to test that.
+  if(req.status == 404){
+    Vue.set(app, "spaces", []);
+    alert(`Unable to get page ${page}`);
+    Vue.set(app, "current_page", page | 0);
+    return;
+  }
+
+  // unpack data
+  const json = await req.json();
+  Vue.set(app, "spaces", json.data);
+  Vue.set(app, "current_page", page);
+}
+
+var app = new Vue({
+  el: '#thisopenspace',
+  data: {
+    spaces: [],
+    current_page: NaN,
+  },
+  created: async function () {
+    const url = new URL(window.location);
+    const params = new URLSearchParams(url.search);
+    const page = params.get("page") | 0;
+    this.current_page = page;
+  },
+  watch: {
+    // this was honestly so annoying to write
+    current_page: function(page, oldPage){
+      const url = new URL(window.location);
+      const params = new URLSearchParams(url.search);
+      params.set("page", page);
+      // update the url parameters
+      history.pushState(null, null, `${window.location.pathname}?${params.toString()}`);
+      // remove the spaces array before we continue to clear the page incase there is an error
+      this.spaces = []
+      syncPages(page);
+    }
+  }
+})
+  </script>
+  <!-- APPLICATION -->
+</html>
