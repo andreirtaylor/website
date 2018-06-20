@@ -70,6 +70,10 @@ app.get('/hack', function(req, res, next){
     res.sendfile('public/stanford_notebook.pdf')
 })
 
+app.get('/thisopenspace', async (req, res, next) => {
+    res.sendfile('public/thisopenspace.html')
+})
+
 // Start the server
 server.listen(PORT)
 console.log('Server listening on port ' + PORT)
