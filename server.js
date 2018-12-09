@@ -12,7 +12,8 @@ var express = require('express'),
     http = require('http'),
     server = http.createServer(app),
     path = require('path'),
-    favicon = require('serve-favicon')
+    favicon = require('serve-favicon'),
+    https = require('https')
 
 //render the pug templates
 app.set('views', path.join(__dirname + '/public'))
@@ -79,6 +80,15 @@ app.get('/nqueens', function(req, res, next){
 
 app.get('/hack', function(req, res, next){
     res.sendfile('public/stanford_notebook.pdf')
+})
+
+app.get('/turn-off-heater', function (req, res, next){
+  let time = Math.min(25,  req.param("in") || 0);
+  console.log("turning off timer in " +  time + " minutes")
+  setTimeout(() => {
+    https.get(process.env.IFTTT_URL|| "https://google.com")
+  }, time * 60 * 1000);
+  res.send("we good")
 })
 
 app.get('/thisopenspace', async (req, res, next) => {
