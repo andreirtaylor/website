@@ -59,17 +59,6 @@ var data = {
     ]
 }
 
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
-
-app.post('/smsnoreply', (req, res) => {
-  const twiml = new MessagingResponse();
-
-  twiml.message('SMS UNDELIVERED. To reply to an office message, click the link provided in the original message.');
-
-  res.writeHead(200, {'Content-Type': 'text/xml'});
-  res.end(twiml.toString());
-});
-
 app.get('/', function(req, res, next){
     res.render('index', data)
 })
