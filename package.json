@@ -9,7 +9,7 @@
   "dependencies": {
     "compression": "^1.7.3",
     "express": "~4.11.1",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "request": "^2.72.0",
     "serve-favicon": "^2.3.0"
   }
