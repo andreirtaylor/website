@@ -62,28 +62,19 @@ app.get("/", function (req, res, next) {
 });
 
 app.get("/nqueens", function (req, res, next) {
-  res.sendfile("public/nqueens.html");
+  res.sendFile(__dirname + "/public/nqueens.html");
 });
 
 app.get("/workout", function (req, res, next) {
-  res.sendfile("public/workout.html");
+  res.sendFile(__dirname + "/public/workout.html");
 });
 
 app.get("/hack", function (req, res, next) {
-  res.sendfile("public/stanford_notebook.pdf");
-});
-
-app.get("/turn-off-heater", function (req, res, next) {
-  let time = Math.min(25, req.param("in") || 0);
-  console.log("turning off timer in " + time + " minutes");
-  setTimeout(() => {
-    https.get(process.env.IFTTT_URL || "https://google.com");
-  }, time * 60 * 1000);
-  res.send("we good");
+  res.sendFile(__dirname + "/public/stanford_notebook.pdf");
 });
 
 app.get("/thisopenspace", async (req, res, next) => {
-  res.sendfile("public/thisopenspace.html");
+  res.sendFile(__dirname + "/public/thisopenspace.html");
 });
 
 // Start the server
