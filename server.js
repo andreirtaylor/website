@@ -69,6 +69,10 @@ app.get("/workout", function (req, res, next) {
   res.sendFile(__dirname + "/public/workout.html");
 });
 
+app.get("/workout_advanced", function (req, res, next) {
+  res.sendFile(__dirname + "/public/workout_advanced.html");
+});
+
 app.get("/hack", function (req, res, next) {
   res.sendFile(__dirname + "/public/stanford_notebook.pdf");
 });
